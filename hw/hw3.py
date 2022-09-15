@@ -30,17 +30,23 @@ km = KMeans(n_clusters=4, random_state=42)
 # to get silhouette, we must fit and predict modified dataset with k-means model
 km.fit_predict(X)
 
+# calculate silhouette_score
 score = silhouette_score(X, km.labels_, metric='euclidean')
 print(score)
 
-range_n_clusters = [2,3,4,5,6,7,8]
+# specified range of clusters
+range_n_clusters = [2, 3, 4, 5, 6, 7, 8]
+# list for saving silhouette scores
 silhouette_avg = []
+
 for num in range_n_clusters:
     kmeans = KMeans(n_clusters=num)
     kmeans.fit(X)
     cluster_labels = kmeans.labels_
+    # calculate silhouette score for each cluster number and save it in the list
     silhouette_avg.append(silhouette_score(X, cluster_labels))
 
+# plot silhouette scores for each cluster numbers
 plt.plot(range_n_clusters, silhouette_avg, 'bx-')
 plt.xlabel("Values of K")
 plt.ylabel("Silhouette Score")
